@@ -97,5 +97,12 @@ full_data <- gdp_clean %>%
 
 # CREATING A NEW FULL DATA SET WITH NO NA's
 
-full_data_no_nas <- full_data %>% 
+full_data_no_nas <- full_data %>% s
   filter(!is.na(youth_NIEET))
+
+
+write_csv(full_data, "full_data.csv")
+write_csv(full_data_no_nas, "full_data_no_nas.csv")
+write_csv(gdp_clean, "gdp_clean.csv")
+write_csv(youth_clean, "youth_clean.csv")
+write_csv(continents_clean, "continents_clean.csv")
