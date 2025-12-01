@@ -9,3 +9,5 @@ full_data2 <- full_data %>%
   ungroup()
 
 view(full_data)
+
+write_csv(full_data, "full_data.csv")
