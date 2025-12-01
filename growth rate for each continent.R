@@ -61,7 +61,7 @@ output_dir <- "continent_data"
 dir.create(output_dir, showWarnings = FALSE)
 
 # Save ONLY the 12 CSV files
-write_csv(continent_growth, file.path(output_dir, "continent_growth"))
+write_csv(continent_growth, file.path(output_dir, "continent_growth.csv"))
 
 write_csv(country_growth_africa, file.path(output_dir, "country_growth_africa.csv"))
 write_csv(continent_growth_africa, file.path(output_dir, "continent_growth_africa.csv"))
