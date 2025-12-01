@@ -8,3 +8,9 @@ library(tidyr)
 continents <- read.csv("/Users/rintaseto/Downloads/EFDS/Intro to Data Science/Mid term/data sets/continents-according-to-our-world-in-data.csv")
 gdp <- read.csv("/Users/rintaseto/Downloads/EFDS/Intro to Data Science/Mid term/data sets/gdp-per-capita-worldbank.csv")
 youth <- read.csv("/Users/rintaseto/Downloads/EFDS/Intro to Data Science/Mid term/data sets/youth-not-in-education-employment-training.csv")
+
+### just to see if it gets pushed
+
+view(continents)
+
+# does this work?
