@@ -10,5 +10,5 @@ youth <- read.csv("youth-not-in-education-employment-training.csv")
 View(continents)
 View(gdpc)
 
-is.na(gdpc$Year)
+is.na(gdpc$Code)
 
