@@ -51,3 +51,35 @@ country_growth_South <- full_data %>%
 
 continent_growth_Soutrh <- continent_growth %>%
   filter(continent == "South America")
+
+
+
+
+
+# Create output directory
+output_dir <- "continent_data"
+dir.create(output_dir, showWarnings = FALSE)
+
+# Save ONLY the 12 CSV files
+write_csv(continent_growth, file.path(output_dir, "continent_growth.csv"))
+
+write_csv(country_growth_africa, file.path(output_dir, "country_growth_africa.csv"))
+write_csv(continent_growth_africa, file.path(output_dir, "continent_growth_africa.csv"))
+
+write_csv(country_growth_asia, file.path(output_dir, "country_growth_asia.csv"))
+write_csv(continent_growth_asia, file.path(output_dir, "continent_growth_asia.csv"))
+
+write_csv(country_growth_Europe, file.path(output_dir, "country_growth_europe.csv"))
+write_csv(continent_growth_Europe, file.path(output_dir, "continent_growth_europe.csv"))
+
+write_csv(country_growth_North, file.path(output_dir, "country_growth_north_america.csv"))
+write_csv(continent_growth_North, file.path(output_dir, "continent_growth_north_america.csv"))
+
+write_csv(country_growth_Oceania, file.path(output_dir, "country_growth_oceania.csv"))
+write_csv(continent_growth_Oceania, file.path(output_dir, "continent_growth_oceania.csv"))
+
+write_csv(country_growth_South, file.path(output_dir, "country_growth_south_america.csv"))
+write_csv(continent_growth_Soutrh, file.path(output_dir, "continent_growth_south_america.csv"))
+
+# would this work?
+
