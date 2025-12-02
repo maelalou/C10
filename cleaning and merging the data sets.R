@@ -101,8 +101,41 @@ full_data_no_nas <- full_data %>% s
   filter(!is.na(youth_NIEET))
 
 
-write_csv(full_data, "full_data.csv")
+
 write_csv(full_data_no_nas, "full_data_no_nas.csv")
 write_csv(gdp_clean, "gdp_clean.csv")
 write_csv(youth_clean, "youth_clean.csv")
 write_csv(continents_clean, "continents_clean.csv")
+
+
+
+
+
+
+#CHANGING THE NAMES OF COUNTRIES USING ISO 3166 NAMING CONVENTION
+
+country_rename <- c(
+  "Bolivia" = "Bolivia (Plurinational State of)",
+  "Brunei" = "Brunei Darussalam",
+  "Cape Verde" = "Cabo Verde",              # If it uses spaces
+  "Cote d'Ivoire" = "Côte d'Ivoire",
+  "Curacao" = "Curaçao",
+  "Democratic Republic of Congo" = "Democratic Republic of the Congo",
+  "East Timor" = "Timor-Leste",
+  "Iran" = "Iran (Islamic Republic of)",
+  "Laos" = "Lao People's Democratic Republic",
+  "Micronesia (country)" = "Micronesia (Federated States of)",
+  "Moldova" = "Moldova (Republic of)",
+  "Palestine" = "Palestine, State of",
+  "Russia" = "Russian Federation",
+  "South Korea" = "Korea, Republic of",
+  "Tanzania" = "United Republic of Tanzania",
+  "Vietnam" = "Viet Nam"
+)
+
+full_data <- full_data %>%
+  mutate(country = recode(country, !!!country_rename))
+
+
+
+write_csv(full_data, "full_data.csv")
