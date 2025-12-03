@@ -8,8 +8,7 @@ library(ggpubr)
 p_ldc_growth_africa <- ggplot(data = ldc_growth_africa, aes(year, gdp_growth, col = country)) +
   geom_point() + 
   geom_line() + 
-  geom_hline(yintercept = 7, linetype = "dashed") + 
-  theme(legend.position = "NULL")
+  geom_hline(yintercept = 7, linetype = "dashed") 
 
 
 
