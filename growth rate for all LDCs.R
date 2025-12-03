@@ -1,45 +1,65 @@
 library(ggpubr)
 
 
+
+continent_ldc_growth <- ldc_full_data %>% 
+  group_by(continent, year) %>%
+  summarise(
+    cont_avg_gdp_growth = mean(gdp_growth, na.rm = TRUE)
+  )
+
+
+
 ldc_growth_africa <- country_growth_africa %>% semi_join(ldc_countries, join_by(code))
 
-p_ldc_growth_africa <- ggplot(data = ldc_growth_africa, aes(year, gdp_growth, col = country)) + 
-  geom_point() + 
-  geom_line() + 
-  geom_hline(yintercept = 7, linetype = "dashed") + 
-  theme(legend.position = "none")
-  
+continent_ldc_growth_africa <- continent_ldc_growth %>% 
+  filter(continent == "Africa")
+
 
 
 ldc_growth_asia <- country_growth_asia %>% semi_join(ldc_countries, join_by(code))
 
-p_ldc_growth_asia <- ggplot(data = ldc_growth_asia, aes(year, gdp_growth, col = country)) + 
-  geom_point() + 
-  geom_line() + 
-  geom_hline(yintercept = 7, linetype = "dashed")
+continent_ldc_growth_asia <- continent_ldc_growth %>%
+  filter(continent == "Asia")
+
 
 
 ### no LDC in europe
 
 
+
 ldc_growth_north_america <- country_growth_north_america %>% semi_join(ldc_countries, join_by(code))
 
-p_ldc_growth_north_america <- ggplot(data = ldc_growth_north_america, aes(year, gdp_growth, col = country)) + 
-  geom_point() + 
-  geom_line() + 
-  geom_hline(yintercept = 7, linetype = "dashed")
+continent_ldc_growth_North <- continent_ldc_growth %>%
+  filter(continent == "North America")
 
 
 
 ldc_growth_oceania <- country_growth_oceania %>% semi_join(ldc_countries, join_by(code))
 
-p_ldc_growth_oceania <- ggplot(data = ldc_growth_oceania, aes(year, gdp_growth, col = country)) + 
-  geom_point() + 
-  geom_line() + 
-  geom_hline(yintercept = 7, linetype = "dashed")
+continent_ldc_growth_Oceania <- continent_ldc_growth %>%
+  filter(continent == "Oceania")
 
 
 
-### no LDC in south america!
+### no LDC in south america
 
-p <- ggarrange(p_ldc_growth_africa, p_ldc_growth_asia, p_ldc_growth_north_america, p_ldc_growth_oceania, ncol = 2, nrow = 2)
+# Create output directory
+output_dir <- "continent_data(LDC)"
+dir.create(output_dir, showWarnings = FALSE)
+
+# Save ONLY the 12 CSV files
+write_csv(continent_ldc_growth, file.path(output_dir, "continent_ldc_growth.csv"))
+
+write_csv(ldc_growth_africa, file.path(output_dir, "ldc_growth_africa.csv"))
+write_csv(continent_ldc_growth_africa, file.path(output_dir, "continent_ldc_growth_africa.csv"))
+
+write_csv(ldc_growth_asia, file.path(output_dir, "ldc_growth_asia.csv"))
+write_csv(continent_ldc_growth_asia, file.path(output_dir, "continent_ldc_growth_asia.csv"))
+
+write_csv(ldc_growth_north_america, file.path(output_dir, "ldc_growth_north_america.csv"))
+write_csv(continent_ldc_growth_North, file.path(output_dir, "continent_ldc_growth_North.csv"))
+
+write_csv(ldc_growth_oceania, file.path(output_dir, "ldc_growth_oceania.csv"))
+write_csv(continent_ldc_growth_Oceania, file.path(output_dir, "continent_ldc_growth_Oceania.csv"))
+
