@@ -32,4 +32,4 @@ ldc_df <- ldc_df %>%
 View (ldc_df)
 
 ldc_data101 <- main_df %>% semi_join(ldc_df, join_by(country))
-View(ldc_data101)
+
