@@ -9,8 +9,6 @@ full_data <- full_data %>%
   ungroup()
 
 
-write_csv(full_data, "full_data.csv")
-
 
 
 
@@ -37,3 +35,4 @@ full_data <- full_data %>% #adding youth unemployment to our full_data data fram
   left_join(youth_unemp_clean, by = c("country", "code", "year"))
 
 
+write_csv(full_data, "full_data.csv")

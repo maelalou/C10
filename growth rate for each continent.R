@@ -3,6 +3,8 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 
+full_data <- read.csv("full_data.csv")
+
 continent_growth <- full_data %>% 
   group_by(continent, year) %>%
   summarise(
@@ -32,10 +34,10 @@ continent_growth_Europe <- continent_growth %>%
   filter(continent == "Europe")
 
 
-country_growth_North <- full_data %>% 
+country_growth_North_America <- full_data %>% 
   filter(continent == "North America")
 
-continent_growth_North <- continent_growth %>%
+continent_growth_North_America <- continent_growth %>%
   filter(continent == "North America")
 
 
@@ -46,10 +48,10 @@ continent_growth_Oceania <- continent_growth %>%
   filter(continent == "Oceania")
 
 
-country_growth_South <- full_data %>% 
+country_growth_South_America <- full_data %>% 
   filter(continent == "South America")
 
-continent_growth_Soutrh <- continent_growth %>%
+continent_growth_South_America <- continent_growth %>%
   filter(continent == "South America")
 
 
@@ -82,4 +84,6 @@ write_csv(country_growth_South, file.path(output_dir, "country_growth_south_amer
 write_csv(continent_growth_Soutrh, file.path(output_dir, "continent_growth_south_america.csv"))
 
 # would this work?
+
+
 
