@@ -3,9 +3,7 @@
 setwd("C:/Users/mesha/OneDrive - Imperial College London/Autumn Term 2025/Data Science/Midterm/C10 - LDC/data sets")
 library(tidyverse)
 
-main_df <- read.csv("full_data.csv")
-
-ldc_countries <- 
+ldc_country_names <- 
   c(
     "Afghanistan", "Angola", "Bangladesh", "Benin", "Burkina Faso", "Burundi", "Cambodia", "Central African Republic", "Chad", "Comoros", "Democratic Republic of Congo",
     "Djibouti", "Ethiopia", "Gambia", "Guinea", "Guinea-Bissau", "Haiti",
@@ -13,7 +11,7 @@ ldc_countries <-
     "Malawi", "Mali", "Mauritania", "Mozambique", "Myanmar", "Nepal", "Niger",
     "Rwanda", "Senegal", "Sierra Leone", "Solomon Islands", "Somalia",
     "Sudan", "East Timor", "Togo", "Tuvalu", "Uganda", "Tanzania",
-     "Zambia")
+    "Zambia")
 
 country_codes <- c("AFG","AGO","BGD","BEN","BFA","BDI","KHM","CAF","TCD","COM", "COD",
                    "DJI","ETH","GMB","GIN","GNB","HTI","KIR", "LAO","LSO","LBR","MDG",
@@ -21,15 +19,19 @@ country_codes <- c("AFG","AGO","BGD","BEN","BFA","BDI","KHM","CAF","TCD","COM", 
                    "SLB","SOM","SDN", "TLS", "TGO","TUV","UGA", "TZA","ZMB")
 
 
-ldc_df <- data.frame(country = ldc_countries)
+ldc_countries <- data.frame(country = ldc_country_names)
 
-ldc_df <- ldc_df %>% 
+ldc_countries <- ldc_countries %>% 
   mutate(
     code = country_codes,
     Status = "Least Developed Country"
   )
-  
-View (ldc_df)
 
-ldc_data101 <- main_df %>% semi_join(ldc_df, join_by(country))
+ldc_full_data <- full_data %>% semi_join(ldc_countries, join_by(code))
+
+output_dir <- "data sets"
+dir.create(output_dir, showWarnings = FALSE)
+
+write_csv(ldc_countries, file.path(output_dir, "ldc_countries.csv"))
+write_csv(ldc_full_data, file.path(output_dir, "ldc_full_data.csv"))
 
