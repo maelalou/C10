@@ -84,7 +84,7 @@ oceania_plot_noLDC <- ggplot(oceania_avg_growth_by_year, aes(x = year, y = Avera
   labs(title = "Average GDP per Capita Growth Rate by Year (Oceania excluding LDCs)",
        x = "Year",
        y = "Average GDP per Capita Growth (%)") + geom_smooth(method = "lm", se = FALSE, color = "blue", linetype = "dashed")
-oceania_plot_noLDC 
+oceania_plot_noLDC
 
 # EUROPE
 

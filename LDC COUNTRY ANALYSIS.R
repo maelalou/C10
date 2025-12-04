@@ -88,3 +88,10 @@ ggsave("ldc_Plots/Africa_LDCs.png", plot = ldc_africa_plot, width = 8, height = 
 ggsave("ldc_Plots/Asia_LDCs.png", plot = ldc_asia_plot, width = 8, height = 6, dpi = 300)
 ggsave("ldc_Plots/Oceania_LDCs.png", plot = ldc_oceania_plot, width = 8, height = 6, dpi = 300)
 ggsave("ldc_Plots/Haiti.png", plot = haiti_plot, width = 8, height = 6, dpi = 300)
+
+#CORRELATION COEFFICIENTS
+
+print(cor(ldc_africa_avg_growth_by_year$year, ldc_africa_avg_growth_by_year$Average_Growth, use = "complete.obs", method = "pearson"))
+print(cor(ldc_asia_avg_growth_by_year$year, ldc_asia_avg_growth_by_year$Average_Growth, use = "complete.obs", method = "pearson"))
+print(cor(haiti_avg_growth_by_year$year, haiti_avg_growth_by_year$Average_Growth, use = "complete.obs", method = "pearson"))
+print(cor(ldc_oceania_avg_growth_by_year$year, ldc_oceania_avg_growth_by_year$Average_Growth, use = "complete.obs", method = "pearson"))
