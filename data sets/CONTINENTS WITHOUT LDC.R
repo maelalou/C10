@@ -5,9 +5,11 @@ library(ggplot2)
 
 #CONTINENTAL AVERAGE GROWTH RATE EXCLUDING LDCs
 
+noldc_full_data <- full_data %>% anti_join(ldc_countries, join_by(code))
+
 #AFRICA
 
-africa_noLDC <- anti_join(country_growth_africa, ldc_df, by = "country")
+africa_noLDC <- anti_join(country_growth_africa, ldc_countries, by = "country")
 
 africa_avg_growth_by_year <- africa_noLDC %>%
   group_by(year) %>%
@@ -23,7 +25,7 @@ africa_plot_noLDC
 
 #ASIA
 
-asia_noLDC <- anti_join(country_growth_asia, ldc_df, by = "country")
+asia_noLDC <- anti_join(country_growth_asia, ldc_countries, by = "country")
 
 asia_avg_growth_by_year <- asia_noLDC %>%
   group_by(year) %>%
@@ -39,7 +41,7 @@ asia_plot_noLDC
 
 #FOR NORTH AMERICA, ITS ONLY HAITI NOT MENTIONED
 
-North_America_noLDC <- anti_join(country_growth_North_America, ldc_df, by = "country")
+North_America_noLDC <- anti_join(country_growth_North_America, ldc_countries, by = "country")
 
 North_America_avg_growth_by_year <- North_America_noLDC %>%
   group_by(year) %>%
@@ -55,7 +57,7 @@ North_America_noLDC
 
 #South America
 
-South_America_noLDC <- anti_join(country_growth_South_America, ldc_df, by = "country")
+South_America_noLDC <- anti_join(country_growth_South_America, ldc_countries, by = "country")
 
 South_America_avg_growth_by_year <- South_America_noLDC %>%
   group_by(year) %>%
@@ -72,7 +74,7 @@ South_America_noLDC
 
 #OCEANIA
 
-oceania_noLDC <- anti_join(country_growth_Oceania, ldc_df, by = "country")
+oceania_noLDC <- anti_join(country_growth_Oceania, ldc_countries, by = "country")
 
 oceania_avg_growth_by_year <- oceania_noLDC %>%
   group_by(year) %>%
@@ -88,7 +90,7 @@ oceania_plot_noLDC
 
 # EUROPE
 
-europe_noLDC <- anti_join(country_growth_Europe, ldc_df, by = "country")
+europe_noLDC <- anti_join(country_growth_Europe, ldc_countries, by = "country")
 
 europe_avg_growth_by_year <- europe_noLDC %>%
   group_by(year) %>%
@@ -102,6 +104,13 @@ europe_plot_noLDC <- ggplot(europe_avg_growth_by_year, aes(x = year, y = Average
        y = "Average GDP per Capita Growth (%)") + geom_smooth(method = "lm", se = FALSE, color = "blue", linetype = "dashed")
 europe_plot_noLDC 
 
+# avg noLDC
+
+continent_noldc_growth <- noldc_full_data %>% 
+  group_by(continent, year) %>%
+  summarise(
+    cont_avg_gdp_growth = mean(gdp_growth, na.rm = TRUE)
+  )
 
 ### FINAL PLOTS
 
@@ -127,5 +136,11 @@ print(cor(oceania_avg_growth_by_year$year, oceania_avg_growth_by_year$Average_Gr
 print(cor(europe_avg_growth_by_year$year, europe_avg_growth_by_year$Average_Growth, use = "complete.obs", method = "pearson"))
 
 
+# downloading csvs
 
+output_dir <- "continent_data(noLDC)"
+dir.create(output_dir, showWarnings = FALSE)
+
+write_csv(noldc_full_data, file.path(output_dir, "noldc_full_data.csv"))
       
+write_csv(continent_noldc_growth, file.path(output_dir, "continent_noldc_growth.csv"))
