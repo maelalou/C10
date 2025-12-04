@@ -24,11 +24,11 @@ sd_5yr_all <- continent_growth %>%
   group_by(continent) %>%
   mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
 
-sd_5yr_LDCs <- continent_ldc_growth %>%
+sd_5yr_ldc <- continent_ldc_growth %>%
   group_by(continent) %>%
   mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
 
-sd_5yr_nonLDCs <- continent_noldc_growth %>%
+sd_5yr_noldc <- continent_noldc_growth %>%
   group_by(continent) %>%
   mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
 
@@ -40,6 +40,6 @@ dir.create(output_dir, showWarnings = FALSE)
 # Save ONLY the 12 CSV files
 write_csv(sd_5yr_all, file.path(output_dir, "sd_5yr_all.csv"))
 
-write_csv(sd_5yr_LDCs, file.path(output_dir, "sd_5yr_LDCs.csv"))
+write_csv(sd_5yr_ldc, file.path(output_dir, "sd_5yr_ldc.csv"))
 
-write_csv(sd_5yr_nonLDCs, file.path(output_dir, "sd_5yr_nonLDCs.csv"))
+write_csv(sd_5yr_noldc, file.path(output_dir, "sd_5yr_noldc.csv"))
