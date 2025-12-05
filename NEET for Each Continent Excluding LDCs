@@ -1,0 +1,60 @@
+library(tidyverse)
+data <- read_csv("noldc_full_data.csv")
+plot_neet_by_continent <- function(df, continent_name, line_colour, plot_title) {
+  df %>%
+    filter(continent == continent_name,
+           !is.na(youth_NIEET)) %>%
+    group_by(year) %>%
+    summarise(neet_mean = mean(youth_NIEET, na.rm = TRUE), .groups = "drop") %>%
+    ggplot(aes(x = year, y = neet_mean)) +
+    geom_line(color = line_colour, linewidth = 1.1) +
+    geom_point(size = 2) +
+    labs(
+      title = plot_title,
+      x = "Year",
+      y = "Average Youth NEET (%)"
+    ) +
+    theme_minimal()
+}
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Africa",
+  line_colour = "blue",
+  plot_title = "Youth NEET Rate in Africa Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Asia",
+  line_colour = "pink",
+  plot_title = "Youth NEET Rate in Asia Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Oceania",
+  line_colour = "purple",
+  plot_title = "Youth NEET Rate in Oceania Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "North America",
+  line_colour = "darkgreen",
+  plot_title = "Youth NEET Rate in North America Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "South America",
+  line_colour = "yellow",
+  plot_title = "Youth NEET Rate in South America Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Europe",
+  line_colour = "orange",
+  plot_title = "Youth NEET Rate in Europe Excluding LDCs"
+)
