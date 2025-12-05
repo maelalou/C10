@@ -36,3 +36,6 @@ full_data <- full_data %>% #adding youth unemployment to our full_data data fram
 
 
 write_csv(full_data, "full_data.csv")
+
+
+
