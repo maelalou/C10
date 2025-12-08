@@ -239,7 +239,7 @@ p <- ggplot(data = na.omit(continent_growth), aes(year, cont_avg_gdp_growth, col
 p
 ```
 
-We are now going to compare each continent, including and not including its respective "Least Developed" Countries
+We are now going to compare each continent, including and not including its respective "Least Developed" countries. We took this list of countries from the UN Trade and Development database (UNCTAD), which is linked in the references page.
 
 ```{r Labelling Countries LDC}
 # WE WILL FIRST LABEL THE COUNTRIES LDC, AND THEN USE THAT IN OUR ANALYSIS
@@ -270,6 +270,8 @@ ldc_countries <- ldc_countries %>%
 ldc_full_data <- full_data %>% semi_join(ldc_countries, join_by(code))
 
 ```
+
+Now with the countries assigned and labelled, we can graph out the plots so we can use *exploratory data analysis* on our continents, and compare them fairly.
 
 ```{r Continent Plots, sans LDC, warning=FALSE}
 #In this R document, Meshack will ascertain growth rates for continents excluding LDCs.
@@ -539,6 +541,97 @@ print(cor(ldc_oceania_avg_growth_by_year$year, ldc_oceania_avg_growth_by_year$Av
 
 ```
 
+Now with the plots created and (Peason) correlation coefficients calculated, we can dive deeper and look for more interesting statistics which could be useful for our analysis.
+
+In order to see trends in volatility, we have the code for plotting 5 year rolling standard deviations to compare standard deviations in our continents.
+
+First, we will calculate the data for the standard deviations.
+
+```{r Data calculations, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ggpubr)
+
+
+cal_5yr_sd <- function(avg_growth) {
+  result <- rep(NA, length(avg_growth))
+
+  for (i in 1:length(avg_growth)) {
+    if(i >= 5){
+      span <- avg_growth[(i-4):i]
+      if(!any(is.na(span))){
+        result[i] <- sd(span)
+      }
+    }
+  }
+  
+  return(result)
+}
+
+sd_5yr_all <- continent_growth %>%
+  group_by(continent) %>%
+  mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
+
+sd_5yr_ldc <- continent_ldc_growth %>%
+  group_by(continent) %>%
+  mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
+
+sd_5yr_noldc <- continent_noldc_growth %>%
+  group_by(continent) %>%
+  mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
+
+
+# Create output directory
+output_dir <- "sd_data"
+dir.create(output_dir, showWarnings = FALSE)
+
+# Save ONLY the 12 CSV files
+write_csv(sd_5yr_all, file.path(output_dir, "sd_5yr_all.csv"))
+
+write_csv(sd_5yr_ldc, file.path(output_dir, "sd_5yr_ldc.csv"))
+
+write_csv(sd_5yr_noldc, file.path(output_dir, "sd_5yr_noldc.csv"))
+
+# changed the name of files
+
+
+```
+
+Now we have the data calculated, we can plot them with the following code:
+
+```{r SD Plots, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ggpubr)
+
+p_sd_5yr_all <- ggplot(data = na.omit(sd_5yr_all), aes(year, sd, col = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "SD of 5 rolling years (World)", subtitle = "For Continents of Africa, Asia, Europe, North America, South America and Oceania", x = "Year", y = "Average SD", caption = "Source: World Bank")  +
+  scale_color_discrete(labels = toupper, name = "Continent") 
+
+p_sd_5yr_LDCs <- ggplot(data = na.omit(sd_5yr_ldc), aes(year, sd, col = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "SD of 5 rolling years (LDCs)", subtitle = "For Continents of Africa, Asia, North America, and Oceania", x = "Year", y = "Average SD", caption = "Source: World Bank")  +
+  scale_color_discrete(labels = toupper, name = "Continent") 
+
+p_sd_5yr_nonLDCs <- ggplot(data = na.omit(sd_5yr_noldc), aes(year, sd, col = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "SD of 5 rolling years (Non-LDCs)", subtitle = "For Continents of Africa, Asia, Europe, North America, South America and Oceania", x = "Year", y = "Average SD", caption = "Source: World Bank")  +
+  scale_color_discrete(labels = toupper, name = "Continent") 
+
+
+
+```
+
+That is all the code for question one. Let us now consider question two.
+
 # ***QUESTION TWO - Elisa and Fiona***
 
 Here is the code used in creating the graphs and data used in Question Two, courtesy of Elisa and Fiona.
@@ -677,3 +770,7 @@ ggplot(continent_key_years,
   theme_minimal()
 
 ```
+
+That is all the code for question two. For more information, see the associated presentation and/or report. Thank you,\
+\
+C10.
