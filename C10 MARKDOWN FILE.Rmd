@@ -11,7 +11,7 @@ Hello. This RMarkdown document will compile all codes used into one singular doc
 
 # **Cleaning & Compiling Data (by Mae)**
 
-Before any analysis was possible, the data needed to be organised, cleaned, merged and compiled. Here is the code that made this possible, lead by Mae.
+Before any analysis was possible, the data needed to be organised, cleaned, merged and compiled. Here is the code that made this possible.
 
 ```{r Cleaning, warning=FALSE}
 library(tidyverse)
@@ -541,7 +541,7 @@ print(cor(ldc_oceania_avg_growth_by_year$year, ldc_oceania_avg_growth_by_year$Av
 
 ```
 
-Now with the plots created and (Peason) correlation coefficients calculated, we can dive deeper and look for more interesting statistics which could be useful for our analysis.
+Now with the plots created and (Pearson) correlation coefficients calculated, we can dive deeper and look for more interesting statistics which could be useful for our analysis.
 
 In order to see trends in volatility, we have the code for plotting 5 year rolling standard deviations to compare standard deviations in our continents.
 
@@ -573,14 +573,17 @@ cal_5yr_sd <- function(avg_growth) {
 sd_5yr_all <- continent_growth %>%
   group_by(continent) %>%
   mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
+sd_5yr_all
 
 sd_5yr_ldc <- continent_ldc_growth %>%
   group_by(continent) %>%
   mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
+sd_5yr_ldc
 
 sd_5yr_noldc <- continent_noldc_growth %>%
   group_by(continent) %>%
   mutate(sd = cal_5yr_sd(cont_avg_gdp_growth))
+sd_5yr_noldc
 
 
 # Create output directory
@@ -612,21 +615,76 @@ p_sd_5yr_all <- ggplot(data = na.omit(sd_5yr_all), aes(year, sd, col = continent
   geom_point() + 
   geom_line() + 
   labs(title = "SD of 5 rolling years (World)", subtitle = "For Continents of Africa, Asia, Europe, North America, South America and Oceania", x = "Year", y = "Average SD", caption = "Source: World Bank")  +
-  scale_color_discrete(labels = toupper, name = "Continent") 
+  scale_color_discrete(labels = toupper, name = "Continent")
+p_sd_5yr_all
 
 p_sd_5yr_LDCs <- ggplot(data = na.omit(sd_5yr_ldc), aes(year, sd, col = continent)) + 
   geom_point() + 
   geom_line() + 
   labs(title = "SD of 5 rolling years (LDCs)", subtitle = "For Continents of Africa, Asia, North America, and Oceania", x = "Year", y = "Average SD", caption = "Source: World Bank")  +
-  scale_color_discrete(labels = toupper, name = "Continent") 
+  scale_color_discrete(labels = toupper, name = "Continent")
+p_sd_5yr_LDCs
 
 p_sd_5yr_nonLDCs <- ggplot(data = na.omit(sd_5yr_noldc), aes(year, sd, col = continent)) + 
   geom_point() + 
   geom_line() + 
   labs(title = "SD of 5 rolling years (Non-LDCs)", subtitle = "For Continents of Africa, Asia, Europe, North America, South America and Oceania", x = "Year", y = "Average SD", caption = "Source: World Bank")  +
   scale_color_discrete(labels = toupper, name = "Continent") 
+p_sd_5yr_nonLDCs
 
 
+```
+
+It is also worth exploring this statistical data in different formats. Let us consider experimenting with the data using box plots.
+
+```{r Box Plot Data, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(ggpubr)
+
+
+p_box_all_pre <- ggplot(data = filter(continent_growth, year <= 2014), aes(continent, cont_avg_gdp_growth)) + 
+  geom_boxplot() + 
+  labs(title = "Box Plot for Continents Including All Countries", subtitle = "Pre-2015", x = "", y = "Average GDP per Capita Growth (%)")
+p_box_all_pre
+
+p_box_all_post <- ggplot(data = filter(continent_growth, year >= 2015), aes(continent, cont_avg_gdp_growth)) + 
+  geom_boxplot() + 
+  labs(subtitle = "Post-2015", x = "", y = "", caption = "Source: World Bank")
+p_box_all_post
+
+p_box_all <- ggarrange(p_box_all_pre, p_box_all_post, ncol=1, nrow = 2)
+
+
+
+
+p_box_ldc_pre <- ggplot(data = filter(continent_ldc_growth, year <= 2014), aes(continent, cont_avg_gdp_growth)) + 
+  geom_boxplot() + 
+  labs(title = "Box Plot for Continents Including LDCs", subtitle = "Pre-2015", x = "", y = "Average GDP per Capita Growth (%)")
+p_box_ldc_pre
+
+p_box_ldc_post <- ggplot(data = filter(continent_ldc_growth, year >= 2015), aes(continent, cont_avg_gdp_growth)) + 
+  geom_boxplot() + 
+  labs(subtitle = "Post-2015", x = "", y = "", caption = "Source: World Bank")
+p_box_ldc_post
+
+p_box_ldc <- ggarrange(p_box_ldc_pre, p_box_ldc_post, ncol=1, nrow = 2)
+
+
+
+p_box_noldc_pre <- ggplot(data = filter(continent_noldc_growth, year <= 2014), aes(continent, cont_avg_gdp_growth)) +
+  geom_boxplot() + 
+  labs(title = "Box Plot for Continents Including All Countries", subtitle = "Pre-2015", x = "", y = "Average GDP per Capita Growth (%)")
+p_box_noldc_pre
+
+p_box_noldc_post <- ggplot(data = filter(continent_noldc_growth, year >= 2015), aes(continent, cont_avg_gdp_growth)) + 
+  geom_boxplot() + 
+  labs(subtitle = "Post-2015", x = "", y = "", caption = "Source: World Bank")
+p_box_noldc_post
+
+p_box_noldc <- ggarrange(p_box_noldc_pre, p_box_noldc_post, ncol=1, nrow = 2)
 
 ```
 
@@ -769,6 +827,151 @@ ggplot(continent_key_years,
   ) +
   theme_minimal()
 
+```
+
+Here we also have code for NEET per continent, excluding LDCs.
+
+```{r NEET per continent (no LDC), warning=FALSE}
+library(tidyverse)
+data <- read_csv("noldc_full_data.csv")
+plot_neet_by_continent <- function(df, continent_name, line_colour, plot_title) {
+  df %>%
+    filter(continent == continent_name,
+           !is.na(youth_NIEET)) %>%
+    group_by(year) %>%
+    summarise(neet_mean = mean(youth_NIEET, na.rm = TRUE), .groups = "drop") %>%
+    ggplot(aes(x = year, y = neet_mean)) +
+    geom_line(color = line_colour, linewidth = 1.1) +
+    geom_point(size = 2) +
+    labs(
+      title = plot_title,
+      x = "Year",
+      y = "Average Youth NEET (%)"
+    ) +
+    theme_minimal()
+}
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Africa",
+  line_colour = "blue",
+  plot_title = "Youth NEET Rate in Africa Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Asia",
+  line_colour = "pink",
+  plot_title = "Youth NEET Rate in Asia Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Oceania",
+  line_colour = "purple",
+  plot_title = "Youth NEET Rate in Oceania Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "North America",
+  line_colour = "darkgreen",
+  plot_title = "Youth NEET Rate in North America Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "South America",
+  line_colour = "yellow",
+  plot_title = "Youth NEET Rate in South America Excluding LDCs"
+)
+
+plot_neet_by_continent(
+  df = data,
+  continent_name = "Europe",
+  line_colour = "orange",
+  plot_title = "Youth NEET Rate in Europe Excluding LDCs"
+)
+
+```
+
+Finally, a focus on continents and their LDCs exclusively.
+
+```{r LDC NEET, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+
+ldc <- read.csv("ldc_full_data.csv",
+                stringsAsFactors = FALSE)
+
+ldc_africa <- ldc %>%
+  filter(continent == "Africa" & !is.na(youth_NIEET)) %>%
+  group_by(year) %>%
+  summarise(avg_neet = mean(youth_NIEET, na.rm = TRUE))
+
+ggplot(ldc_africa, aes(x = year, y = avg_neet)) +
+  geom_line(color = "blue", size = 1.1) +
+  geom_point(size = 2) +
+  theme_minimal() +
+  labs(title = "Youth NEET Rate in African LDCs",
+       x = "Year",
+       y = "NEET (%)")
+
+library(tidyverse)
+library(ggplot2)
+
+ldc <- read.csv("ldc_full_data.csv",
+                stringsAsFactors = FALSE)
+
+ldc_asia <- ldc %>%
+  filter(continent == "Asia" & !is.na(youth_NIEET)) %>%
+  group_by(year) %>%
+  summarise(avg_neet = mean(youth_NIEET, na.rm = TRUE))
+
+ggplot(ldc_asia, aes(x = year, y = avg_neet)) +
+  geom_line(color = "pink", size = 1.1) +
+  geom_point(size = 2) +
+  theme_minimal() +
+  labs(title = "Youth NEET Rate in Asian LDCs",
+       x = "Year",
+       y = "NEET (%)")
+
+library(tidyverse)
+library(ggplot2)
+
+ldc <- read.csv("ldc_full_data.csv",
+                stringsAsFactors = FALSE)
+
+ldc_north <- ldc %>%
+  filter(continent == "North America" &
+           !is.na(youth_NIEET))
+
+ggplot(ldc_north, aes(x = year, y = youth_NIEET)) +
+  geom_line(color = "darkgreen", size = 1.1) +
+  geom_point(size = 2) +
+  theme_minimal() +
+  labs(title = "Youth NEET Rate in Haiti (Only LDC in North America)",
+       x = "Year",
+       y = "NEET (%)")
+
+library(tidyverse)
+library(ggplot2)
+
+ldc <- read.csv("ldc_full_data.csv",
+                stringsAsFactors = FALSE)
+
+ldc_oceania <- ldc %>%
+  filter(continent == "Oceania" & !is.na(youth_NIEET)) %>%
+  group_by(year) %>%
+  summarise(avg_neet = mean(youth_NIEET, na.rm = TRUE))
+
+ggplot(ldc_oceania, aes(x = year, y = avg_neet)) +
+  geom_line(color = "purple", size = 1.1) +
+  geom_point(size = 2) +
+  theme_minimal() +
+  labs(title = "Youth NEET Rate in Oceania LDCs",
+       x = "Year",
+       y = "NEET (%)")
 ```
 
 That is all the code for question two. For more information, see the associated presentation and/or report. Thank you,\

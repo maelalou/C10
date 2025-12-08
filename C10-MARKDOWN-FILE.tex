@@ -1,0 +1,626 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={C10 IDS MIDTERM},
+  pdfauthor={Elisa, Fiona, Mae, Meshack, Rinta},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{C10 IDS MIDTERM}
+\author{Elisa, Fiona, Mae, Meshack, Rinta}
+\date{2025-12-05}
+
+\begin{document}
+\maketitle
+
+This will compile all codes used into one singular document,
+reproducible from scratch.
+
+QUESTION ONE TARGET ONE - RINTA \& MESHACK
+
+Average GDP Growth Rate for all continents:
+
+First, we must prepare all the data files which we will be using.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'tidyverse' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'ggplot2' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'tibble' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'tidyr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'readr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'purrr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'dplyr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'stringr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'forcats' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: package 'lubridate' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.6
+## v forcats   1.0.1     v stringr   1.6.0
+## v ggplot2   4.0.1     v tibble    3.3.0
+## v lubridate 1.9.4     v tidyr     1.3.1
+## v purrr     1.2.0     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+
+\NormalTok{full\_data }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"full\_data.csv"}\NormalTok{)}
+
+\NormalTok{continent\_growth }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(continent, year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{cont\_avg\_gdp\_growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'continent'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{country\_growth\_africa }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Africa"}\NormalTok{)}
+
+\NormalTok{continent\_growth\_africa }\OtherTok{\textless{}{-}}\NormalTok{ continent\_growth }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Africa"}\NormalTok{)}
+
+
+\NormalTok{country\_growth\_asia }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Asia"}\NormalTok{)}
+
+\NormalTok{continent\_growth\_asia }\OtherTok{\textless{}{-}}\NormalTok{ continent\_growth }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Asia"}\NormalTok{)}
+
+
+\NormalTok{country\_growth\_Europe }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Europe"}\NormalTok{)}
+
+\NormalTok{continent\_growth\_Europe }\OtherTok{\textless{}{-}}\NormalTok{ continent\_growth }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Europe"}\NormalTok{)}
+
+
+\NormalTok{country\_growth\_North\_America }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"North America"}\NormalTok{)}
+
+\NormalTok{continent\_growth\_North\_America }\OtherTok{\textless{}{-}}\NormalTok{ continent\_growth }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"North America"}\NormalTok{)}
+
+
+\NormalTok{country\_growth\_Oceania }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Oceania"}\NormalTok{)}
+
+\NormalTok{continent\_growth\_Oceania }\OtherTok{\textless{}{-}}\NormalTok{ continent\_growth }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"Oceania"}\NormalTok{)}
+
+
+\NormalTok{country\_growth\_South\_America }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"South America"}\NormalTok{)}
+
+\NormalTok{continent\_growth\_South\_America }\OtherTok{\textless{}{-}}\NormalTok{ continent\_growth }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(continent }\SpecialCharTok{==} \StringTok{"South America"}\NormalTok{)}
+
+
+
+
+
+\CommentTok{\# Create output directory}
+\NormalTok{output\_dir }\OtherTok{\textless{}{-}} \StringTok{"continent\_data"}
+\FunctionTok{dir.create}\NormalTok{(output\_dir, }\AttributeTok{showWarnings =} \ConstantTok{FALSE}\NormalTok{)}
+
+\CommentTok{\# Save ONLY the 12 CSV files}
+\FunctionTok{write\_csv}\NormalTok{(continent\_growth, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"continent\_growth.csv"}\NormalTok{))}
+
+\FunctionTok{write\_csv}\NormalTok{(country\_growth\_africa, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"country\_growth\_africa.csv"}\NormalTok{))}
+\FunctionTok{write\_csv}\NormalTok{(continent\_growth\_africa, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"continent\_growth\_africa.csv"}\NormalTok{))}
+
+\FunctionTok{write\_csv}\NormalTok{(country\_growth\_asia, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"country\_growth\_asia.csv"}\NormalTok{))}
+\FunctionTok{write\_csv}\NormalTok{(continent\_growth\_asia, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"continent\_growth\_asia.csv"}\NormalTok{))}
+
+\FunctionTok{write\_csv}\NormalTok{(country\_growth\_Europe, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"country\_growth\_europe.csv"}\NormalTok{))}
+\FunctionTok{write\_csv}\NormalTok{(continent\_growth\_Europe, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"continent\_growth\_europe.csv"}\NormalTok{))}
+
+\FunctionTok{write\_csv}\NormalTok{(country\_growth\_North\_America, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"country\_growth\_north\_america.csv"}\NormalTok{))}
+\FunctionTok{write\_csv}\NormalTok{(continent\_growth\_North\_America, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"continent\_growth\_north\_america.csv"}\NormalTok{))}
+
+\FunctionTok{write\_csv}\NormalTok{(country\_growth\_Oceania, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"country\_growth\_oceania.csv"}\NormalTok{))}
+\FunctionTok{write\_csv}\NormalTok{(continent\_growth\_Oceania, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"continent\_growth\_oceania.csv"}\NormalTok{))}
+
+\FunctionTok{write\_csv}\NormalTok{(country\_growth\_South\_America, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"country\_growth\_south\_america.csv"}\NormalTok{))}
+\FunctionTok{write\_csv}\NormalTok{(continent\_growth\_South\_America, }\FunctionTok{file.path}\NormalTok{(output\_dir, }\StringTok{"continent\_growth\_south\_america.csv"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Now, we can move into plotting these graphs,
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(ggpubr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'ggpubr' was built under R version 4.5.2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =} \FunctionTok{na.omit}\NormalTok{(continent\_growth), }\FunctionTok{aes}\NormalTok{(year, cont\_avg\_gdp\_growth, }\AttributeTok{col =}\NormalTok{ continent)) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average GDP per Capita Growth Rate (World)"}\NormalTok{, }\AttributeTok{subtitle =} \StringTok{"For Continents of Africa, Asia, Europe, North America, South America and Oceania"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Year"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Average GDP per Capita Growth"}\NormalTok{, }\AttributeTok{caption =} \StringTok{"Source: World Bank"}\NormalTok{)  }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_discrete}\NormalTok{(}\AttributeTok{labels =}\NormalTok{ toupper, }\AttributeTok{name =} \StringTok{"Continent"}\NormalTok{) }
+
+\NormalTok{p}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{C10-MARKDOWN-FILE_files/figure-latex/unnamed-chunk-1-1.pdf}}
+
+We are now going to compare each continent, including and not including
+its respective ``Least Developed'' Countries
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# WE WILL FIRST LABEL THE COUNTRIES LDC, AND THEN USE THAT IN OUR ANALYSIS}
+\NormalTok{ldc\_country\_names }\OtherTok{\textless{}{-}} 
+  \FunctionTok{c}\NormalTok{(}
+    \StringTok{"Afghanistan"}\NormalTok{, }\StringTok{"Angola"}\NormalTok{, }\StringTok{"Bangladesh"}\NormalTok{, }\StringTok{"Benin"}\NormalTok{, }\StringTok{"Burkina Faso"}\NormalTok{, }\StringTok{"Burundi"}\NormalTok{, }\StringTok{"Cambodia"}\NormalTok{, }\StringTok{"Central African Republic"}\NormalTok{, }\StringTok{"Chad"}\NormalTok{, }\StringTok{"Comoros"}\NormalTok{, }\StringTok{"Democratic Republic of Congo"}\NormalTok{,}
+    \StringTok{"Djibouti"}\NormalTok{, }\StringTok{"Ethiopia"}\NormalTok{, }\StringTok{"Gambia"}\NormalTok{, }\StringTok{"Guinea"}\NormalTok{, }\StringTok{"Guinea{-}Bissau"}\NormalTok{, }\StringTok{"Haiti"}\NormalTok{,}
+    \StringTok{"Kiribati"}\NormalTok{, }\StringTok{"Laos"}\NormalTok{, }\StringTok{"Lesotho"}\NormalTok{, }\StringTok{"Liberia"}\NormalTok{, }\StringTok{"Madagascar"}\NormalTok{,}
+    \StringTok{"Malawi"}\NormalTok{, }\StringTok{"Mali"}\NormalTok{, }\StringTok{"Mauritania"}\NormalTok{, }\StringTok{"Mozambique"}\NormalTok{, }\StringTok{"Myanmar"}\NormalTok{, }\StringTok{"Nepal"}\NormalTok{, }\StringTok{"Niger"}\NormalTok{,}
+    \StringTok{"Rwanda"}\NormalTok{, }\StringTok{"Senegal"}\NormalTok{, }\StringTok{"Sierra Leone"}\NormalTok{, }\StringTok{"Solomon Islands"}\NormalTok{, }\StringTok{"Somalia"}\NormalTok{,}
+    \StringTok{"Sudan"}\NormalTok{, }\StringTok{"East Timor"}\NormalTok{, }\StringTok{"Togo"}\NormalTok{, }\StringTok{"Tuvalu"}\NormalTok{, }\StringTok{"Uganda"}\NormalTok{, }\StringTok{"Tanzania"}\NormalTok{,}
+    \StringTok{"Zambia"}\NormalTok{)}
+
+\NormalTok{country\_codes }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"AFG"}\NormalTok{,}\StringTok{"AGO"}\NormalTok{,}\StringTok{"BGD"}\NormalTok{,}\StringTok{"BEN"}\NormalTok{,}\StringTok{"BFA"}\NormalTok{,}\StringTok{"BDI"}\NormalTok{,}\StringTok{"KHM"}\NormalTok{,}\StringTok{"CAF"}\NormalTok{,}\StringTok{"TCD"}\NormalTok{,}\StringTok{"COM"}\NormalTok{, }\StringTok{"COD"}\NormalTok{,}
+                   \StringTok{"DJI"}\NormalTok{,}\StringTok{"ETH"}\NormalTok{,}\StringTok{"GMB"}\NormalTok{,}\StringTok{"GIN"}\NormalTok{,}\StringTok{"GNB"}\NormalTok{,}\StringTok{"HTI"}\NormalTok{,}\StringTok{"KIR"}\NormalTok{, }\StringTok{"LAO"}\NormalTok{,}\StringTok{"LSO"}\NormalTok{,}\StringTok{"LBR"}\NormalTok{,}\StringTok{"MDG"}\NormalTok{,}
+                   \StringTok{"MWI"}\NormalTok{,}\StringTok{"MLI"}\NormalTok{,}\StringTok{"MRT"}\NormalTok{,}\StringTok{"MOZ"}\NormalTok{,}\StringTok{"MMR"}\NormalTok{,}\StringTok{"NPL"}\NormalTok{,}\StringTok{"NER"}\NormalTok{,}\StringTok{"RWA"}\NormalTok{,}\StringTok{"SEN"}\NormalTok{,}\StringTok{"SLE"}\NormalTok{,}
+                   \StringTok{"SLB"}\NormalTok{,}\StringTok{"SOM"}\NormalTok{,}\StringTok{"SDN"}\NormalTok{, }\StringTok{"TLS"}\NormalTok{, }\StringTok{"TGO"}\NormalTok{,}\StringTok{"TUV"}\NormalTok{,}\StringTok{"UGA"}\NormalTok{, }\StringTok{"TZA"}\NormalTok{,}\StringTok{"ZMB"}\NormalTok{)}
+
+
+\NormalTok{ldc\_countries }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{country =}\NormalTok{ ldc\_country\_names)}
+
+\NormalTok{ldc\_countries }\OtherTok{\textless{}{-}}\NormalTok{ ldc\_countries }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{code =}\NormalTok{ country\_codes,}
+    \AttributeTok{Status =} \StringTok{"Least Developed Country"}
+\NormalTok{  )}
+
+\NormalTok{ldc\_full\_data }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{semi\_join}\NormalTok{(ldc\_countries, }\FunctionTok{join\_by}\NormalTok{(code))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#In this R document, Meshack will ascertain growth rates for continents excluding LDCs.}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\CommentTok{\#CONTINENTAL AVERAGE GROWTH RATE EXCLUDING LDCs}
+
+\NormalTok{noldc\_full\_data }\OtherTok{\textless{}{-}}\NormalTok{ full\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{anti\_join}\NormalTok{(ldc\_countries, }\FunctionTok{join\_by}\NormalTok{(code))}
+
+\CommentTok{\#AFRICA}
+
+\NormalTok{africa\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{anti\_join}\NormalTok{(country\_growth\_africa, ldc\_countries, }\AttributeTok{by =} \StringTok{"country"}\NormalTok{)}
+
+\NormalTok{africa\_avg\_growth\_by\_year }\OtherTok{\textless{}{-}}\NormalTok{ africa\_noLDC }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Average\_Growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+
+\NormalTok{africa\_plot\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(africa\_avg\_growth\_by\_year, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ Average\_Growth)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{colour =} \StringTok{"grey"}\NormalTok{,}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average GDP per Capita Growth Rate by Year (Africa excluding LDCs)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average GDP per Capita Growth (\%)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{africa\_plot\_noLDC }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing non-finite outside the scale range
+## (`stat_smooth()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_line()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_point()`).
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{C10-MARKDOWN-FILE_files/figure-latex/unnamed-chunk-3-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ASIA}
+
+\NormalTok{asia\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{anti\_join}\NormalTok{(country\_growth\_asia, ldc\_countries, }\AttributeTok{by =} \StringTok{"country"}\NormalTok{)}
+
+\NormalTok{asia\_avg\_growth\_by\_year }\OtherTok{\textless{}{-}}\NormalTok{ asia\_noLDC }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Average\_Growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+
+\NormalTok{asia\_plot\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(asia\_avg\_growth\_by\_year, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ Average\_Growth)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{colour =} \StringTok{"grey"}\NormalTok{,}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average GDP per Capita Growth Rate by Year (Asia excluding LDCs)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average GDP per Capita Growth (\%)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\NormalTok{asia\_plot\_noLDC  }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing non-finite outside the scale range
+## (`stat_smooth()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_line()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_point()`).
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{C10-MARKDOWN-FILE_files/figure-latex/unnamed-chunk-3-2.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#FOR NORTH AMERICA, ITS ONLY HAITI NOT MENTIONED}
+
+\NormalTok{North\_America\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{anti\_join}\NormalTok{(country\_growth\_North\_America, ldc\_countries, }\AttributeTok{by =} \StringTok{"country"}\NormalTok{)}
+
+\NormalTok{North\_America\_avg\_growth\_by\_year }\OtherTok{\textless{}{-}}\NormalTok{ North\_America\_noLDC }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Average\_Growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+
+\NormalTok{North\_America\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(North\_America\_avg\_growth\_by\_year, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ Average\_Growth)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{colour =} \StringTok{"grey"}\NormalTok{,}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average GDP per Capita Growth Rate by Year (North America excluding Haiti)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average GDP per Capita Growth (\%)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\NormalTok{North\_America\_noLDC}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing non-finite outside the scale range
+## (`stat_smooth()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_line()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_point()`).
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{C10-MARKDOWN-FILE_files/figure-latex/unnamed-chunk-3-3.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#South America}
+
+\NormalTok{South\_America\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{anti\_join}\NormalTok{(country\_growth\_South\_America, ldc\_countries, }\AttributeTok{by =} \StringTok{"country"}\NormalTok{)}
+
+\NormalTok{South\_America\_avg\_growth\_by\_year }\OtherTok{\textless{}{-}}\NormalTok{ South\_America\_noLDC }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Average\_Growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+
+\NormalTok{South\_America\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(South\_America\_avg\_growth\_by\_year, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ Average\_Growth)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{colour =} \StringTok{"grey"}\NormalTok{,}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average GDP per Capita Growth Rate by Year (South America)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average GDP per Capita Growth (\%)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\NormalTok{South\_America\_noLDC}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing non-finite outside the scale range
+## (`stat_smooth()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_line()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_point()`).
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{C10-MARKDOWN-FILE_files/figure-latex/unnamed-chunk-3-4.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#OCEANIA}
+
+\NormalTok{oceania\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{anti\_join}\NormalTok{(country\_growth\_Oceania, ldc\_countries, }\AttributeTok{by =} \StringTok{"country"}\NormalTok{)}
+
+\NormalTok{oceania\_avg\_growth\_by\_year }\OtherTok{\textless{}{-}}\NormalTok{ oceania\_noLDC }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Average\_Growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+
+\NormalTok{oceania\_plot\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(oceania\_avg\_growth\_by\_year, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ Average\_Growth)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{colour =} \StringTok{"grey"}\NormalTok{,}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average GDP per Capita Growth Rate by Year (Oceania excluding LDCs)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average GDP per Capita Growth (\%)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\NormalTok{oceania\_plot\_noLDC}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing non-finite outside the scale range
+## (`stat_smooth()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_line()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_point()`).
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{C10-MARKDOWN-FILE_files/figure-latex/unnamed-chunk-3-5.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# EUROPE}
+
+\NormalTok{europe\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{anti\_join}\NormalTok{(country\_growth\_Europe, ldc\_countries, }\AttributeTok{by =} \StringTok{"country"}\NormalTok{)}
+
+\NormalTok{europe\_avg\_growth\_by\_year }\OtherTok{\textless{}{-}}\NormalTok{ europe\_noLDC }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Average\_Growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+
+\NormalTok{europe\_plot\_noLDC }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(europe\_avg\_growth\_by\_year, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ Average\_Growth)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{colour =} \StringTok{"grey"}\NormalTok{,}\AttributeTok{size =} \FloatTok{1.2}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{colour =} \StringTok{"black"}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average GDP per Capita Growth Rate by Year (Europe)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average GDP per Capita Growth (\%)"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{)}
+\NormalTok{europe\_plot\_noLDC }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing non-finite outside the scale range
+## (`stat_smooth()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_line()`).
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: Removed 1 row containing missing values or values outside the scale range
+## (`geom_point()`).
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{C10-MARKDOWN-FILE_files/figure-latex/unnamed-chunk-3-6.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# avg noLDC}
+
+\NormalTok{continent\_noldc\_growth }\OtherTok{\textless{}{-}}\NormalTok{ noldc\_full\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{group\_by}\NormalTok{(continent, year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{cont\_avg\_gdp\_growth =} \FunctionTok{mean}\NormalTok{(gdp\_growth, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'continent'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\end{document}
